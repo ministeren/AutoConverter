@@ -1,0 +1,229 @@
+﻿<Window x:Class="AutoConverter.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AutoConverter"
+        mc:Ignorable="d"
+        Title="AutoConverter" Height="500" Width="660">
+    <Grid Background="Black">
+        <Grid.ColumnDefinitions >
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.8*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Background="Cyan">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="2.5*" />
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="20" Background="Cyan">Input file:</TextBlock>
+            <TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="20" Background="Cyan">Output file:</TextBlock>
+            <Button Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Background="Magenta" Content="{Binding FileName}" FontSize="25" Command="{Binding ChooseFile}" Width="270" Height="60"></Button>
+            <TextBox Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding OutFileName}" TextAlignment="Center" Padding="13" FontSize="25" Width="270" Height="60"></TextBox>
+        </Grid>
+        <Grid Grid.Row="1" VerticalAlignment="center" HorizontalAlignment="Center" Background="Cyan">
+            <DockPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Column="0" Grid.Row="0" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Cyan">Copy</TextBlock>
+                    <CheckBox Grid.Column="0" Grid.Row="1" IsChecked="{Binding CopyVideo}" HorizontalAlignment="Center" VerticalAlignment="Center">Video</CheckBox>
+                    <CheckBox Grid.Column="0" Grid.Row="2" IsChecked="{Binding CopyAudio}" HorizontalAlignment="Center" VerticalAlignment="Center">Audio</CheckBox>
+                    <CheckBox Grid.Column="0" Grid.Row="3" IsChecked="{Binding CopySub}" HorizontalAlignment="Center" VerticalAlignment="Center">Sub</CheckBox>
+                </Grid>
+                <Grid Background="Black">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="6"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                    </Grid.RowDefinitions>
+                </Grid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Column="0" Grid.Row="0" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Cyan">Streams</TextBlock>
+                    <CheckBox Grid.Column="1" Grid.Row="1" IsChecked="{Binding Map0}" IsEnabled="{Binding Map0enabled}" HorizontalAlignment="Center" VerticalAlignment="Center">Stream 0</CheckBox>
+                    <CheckBox Grid.Column="1" Grid.Row="2" IsChecked="{Binding Map1}" IsEnabled="{Binding Map1enabled}" HorizontalAlignment="Center" VerticalAlignment="Center">Stream 1</CheckBox>
+                    <CheckBox Grid.Column="1" Grid.Row="3" IsChecked="{Binding Map2}" IsEnabled="{Binding Map2enabled}" HorizontalAlignment="Center" VerticalAlignment="Center">Stream 2</CheckBox>
+                    <CheckBox Grid.Column="1" Grid.Row="4" IsChecked="{Binding Map3}" IsEnabled="{Binding Map3enabled}" HorizontalAlignment="Center" VerticalAlignment="Center">Stream 3</CheckBox>
+                </Grid>
+                <Grid Background="Black">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="6"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                    </Grid.RowDefinitions>
+                </Grid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Column="0" Grid.Row="0" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Cyan">Filters</TextBlock>
+                    <CheckBox Grid.Column="2" Grid.Row="1" IsChecked="{Binding Deinterlace}" IsEnabled="{Binding DeinterlaceEnabled}" HorizontalAlignment="Center" VerticalAlignment="Center">Deinterlace</CheckBox>
+                </Grid>
+                <Grid Background="Black">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="6"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                    </Grid.RowDefinitions>
+                </Grid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Column="0" Grid.Row="0" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Cyan">Video</TextBlock>
+                    <RadioButton Grid.Column="3" Grid.Row="1" IsChecked="{Binding Codecx264}" IsEnabled="{Binding Codecx264enabled}" HorizontalAlignment="Center" VerticalAlignment="Center">x264</RadioButton>
+                </Grid>
+                <Grid Background="Black">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="6"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                    </Grid.RowDefinitions>
+                </Grid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Column="0" Grid.Row="0" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Cyan">Audio</TextBlock>
+                    <RadioButton Grid.Column="3" Grid.Row="1" IsChecked="{Binding CodecAC3}" IsEnabled="{Binding CodecAC3enabled}" HorizontalAlignment="Center" VerticalAlignment="Center">AC3</RadioButton>
+                </Grid>
+                <Grid Background="Black">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="6"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                    </Grid.RowDefinitions>
+                </Grid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Column="0" Grid.Row="0" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Cyan">Container</TextBlock>
+                    <RadioButton Grid.Column="4" Grid.Row="1" IsChecked="{Binding MkvOut}" HorizontalAlignment="Center" VerticalAlignment="Center">.mkv</RadioButton>
+                    <RadioButton Grid.Column="4" Grid.Row="2" IsChecked="{Binding Mp4Out}" HorizontalAlignment="Center" VerticalAlignment="Center">.mp4</RadioButton>
+                </Grid>
+            </DockPanel>
+            <!--<Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
+            </Grid.RowDefinitions>
+            <TextBox Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Cyan">Copy</TextBox>
+            <TextBox Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Cyan">Streams</TextBox>
+            <TextBox Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Cyan">Filters</TextBox>
+            <TextBox Grid.Column="3" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Cyan">Codecs</TextBox>
+            <TextBox Grid.Column="4" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Cyan">Container</TextBox>
+            <CheckBox Grid.Column="0" Grid.Row="1" IsChecked="{Binding CopyVideo}" HorizontalAlignment="Center" VerticalAlignment="Center">Video</CheckBox>
+            <CheckBox Grid.Column="0" Grid.Row="2" IsChecked="{Binding CopyAudio}" HorizontalAlignment="Center" VerticalAlignment="Center">Audio</CheckBox>
+            <CheckBox Grid.Column="0" Grid.Row="3" IsChecked="{Binding CopySub}" HorizontalAlignment="Center" VerticalAlignment="Center">Sub</CheckBox>
+            <CheckBox Grid.Column="1" Grid.Row="1" IsChecked="{Binding Map0}" HorizontalAlignment="Center" VerticalAlignment="Center">Stream 0</CheckBox>
+            <CheckBox Grid.Column="1" Grid.Row="2" IsChecked="{Binding Map1}" HorizontalAlignment="Center" VerticalAlignment="Center">Stream 1</CheckBox>
+            <CheckBox Grid.Column="1" Grid.Row="3" IsChecked="{Binding Map2}" HorizontalAlignment="Center" VerticalAlignment="Center">Stream 2</CheckBox>
+            <CheckBox Grid.Column="1" Grid.Row="4" IsChecked="{Binding Map3}" HorizontalAlignment="Center" VerticalAlignment="Center">Stream 3</CheckBox>
+            <CheckBox Grid.Column="2" Grid.Row="1" IsChecked="{Binding Deinterlace}" HorizontalAlignment="Center" VerticalAlignment="Center">Deinterlace</CheckBox>
+            <RadioButton Grid.Column="3" Grid.Row="1" IsChecked="{Binding Codecx264}" HorizontalAlignment="Center" VerticalAlignment="Center">x264</RadioButton>
+            <RadioButton Grid.Column="4" Grid.Row="1" IsChecked="{Binding MkvOut}" HorizontalAlignment="Center" VerticalAlignment="Center">.mkv</RadioButton>
+            <RadioButton Grid.Column="4" Grid.Row="2" IsChecked="{Binding Mp4Out}" HorizontalAlignment="Center" VerticalAlignment="Center">.mp4</RadioButton>-->
+        </Grid>
+        <Grid Grid.Row="2" Background="Cyan">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1.5*" />
+            </Grid.RowDefinitions>
+            <TextBox Grid.Row="0" VerticalAlignment="Bottom" HorizontalAlignment="Center" Text="{Binding ConvertArgs}" TextAlignment="Center" Padding="15" FontSize="15" Width="600" Height="50"></TextBox>
+            <Button Grid.Row="1" Background="Yellow" Content="START" FontSize="45" Visibility="{Binding StartVisible}" Command="{Binding Convert}" Width="250" Height="70" ></Button>
+            <ProgressBar Grid.Row="1" Width="600" Height="50" Visibility="{Binding ProgressVisible}"></ProgressBar>
+        </Grid>
+     </Grid>
+</Window>
