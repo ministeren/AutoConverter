@@ -223,7 +223,9 @@
             </Grid.RowDefinitions>
             <TextBox Grid.Row="0" VerticalAlignment="Bottom" HorizontalAlignment="Center" Text="{Binding ConvertArgs}" TextAlignment="Center" Padding="15" FontSize="15" Width="600" Height="50"></TextBox>
             <Button Grid.Row="1" Background="Yellow" Content="START" FontSize="45" Visibility="{Binding StartVisible}" Command="{Binding Convert}" Width="250" Height="70" ></Button>
-            <ProgressBar Grid.Row="1" Width="600" Height="50" Visibility="{Binding ProgressVisible}"></ProgressBar>
+            <ProgressBar Grid.Row="1" Width="600" Height="50" Name="pb" Visibility="{Binding ProgressVisible}" Minimum="0" Maximum="100" Value="{Binding ProgressValue}"></ProgressBar>
+            <TextBlock Grid.Row="1" Text="{Binding ElementName=pb, Path=Value, StringFormat={}{0:0}%}" Visibility="{Binding ElementName=pb, Path=Visibility}" HorizontalAlignment="Center" 
+           VerticalAlignment="Center" />
         </Grid>
      </Grid>
 </Window>

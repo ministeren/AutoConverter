@@ -9,6 +9,7 @@ using System.Text;
 using NReco.VideoConverter;
 using System.Runtime.InteropServices;
 using System.Windows;
+using System.Threading.Tasks;
 
 namespace AutoConverter.ViewModel
 {
@@ -31,7 +32,7 @@ namespace AutoConverter.ViewModel
         public MainViewModel()
         {
             cmda = new CmdAccess();
-            setInit();
+            SetInit();
         }
 
         //private CmdAccess cmda => CmdAccess.Instance;
@@ -39,10 +40,10 @@ namespace AutoConverter.ViewModel
         private string _filePathName = null;
 
         private string _fileName;
-        public string FileName { get { return _fileName; } set { _fileName = value; NotifyPropertyChanged(); } }
+        public string FileName { get { return _fileName; } set { _fileName = value; if (value.Length > 0) { StartVisible = Visibility.Visible; }; NotifyPropertyChanged(); } }
         
         private string _outFileName;
-        public string OutFileName { get { return _outFileName; } set { _outFileName = value; NotifyPropertyChanged(); } }
+        public string OutFileName { get { return _outFileName; } set { _outFileName = value;  NotifyPropertyChanged(); } }
 
         private string _convertArgs;
         public string ConvertArgs { get { return _convertArgs; } set { _convertArgs = value; NotifyPropertyChanged(); } }
@@ -109,6 +110,9 @@ namespace AutoConverter.ViewModel
 
         private bool _mp4out;
         public bool Mp4Out { get { return _mp4out; } set { _mp4out = value; if (value) { MkvOut = false; }; updateCustomArgs(); NotifyPropertyChanged(); } }
+        
+        private int _progressValue;
+        public int ProgressValue { get { return _progressValue; } set { _progressValue = value; updateCustomArgs(); NotifyPropertyChanged(); } }
 
         private Visibility _startVisible;
         public Visibility StartVisible { get { return _startVisible; } set { _startVisible = value; if (value.Equals(Visibility.Visible)) { ProgressVisible = Visibility.Hidden; }; NotifyPropertyChanged(); } }
@@ -116,7 +120,7 @@ namespace AutoConverter.ViewModel
         private Visibility _progressVisible;
         public Visibility ProgressVisible { get { return _progressVisible; } set { _progressVisible = value; if (value.Equals(Visibility.Visible)) { StartVisible = Visibility.Hidden; }; NotifyPropertyChanged(); } }
 
-        public ICommand Convert { get { return new RelayCommand(exeConv); } }
+        public ICommand Convert { get { return new RelayCommand(StartConvert); } }
 
         public ICommand ChooseFile { get { return new RelayCommand(setFile); } }
 
@@ -124,11 +128,20 @@ namespace AutoConverter.ViewModel
 
         //public ICommand ChooseFfmpegFolder { get { return new RelayCommand(setFfmpegFolder); } }
 
-        private void exeConv()
+        private void StartConvert()
+        {
+            Task T = new Task(() => ExeConv());
+            T.Start();
+        }
+
+        //FFMpegConverter conv = new FFMpegConverter();
+        //ConvertSettings convSet = new ConvertSettings();
+
+        private void ExeConv()
         {
 
             Debug.WriteLine(ConvertArgs);
-            
+
             FFMpegConverter conv = new FFMpegConverter();
 
             conv.ConvertProgress += UpdateProgress;
@@ -141,6 +154,8 @@ namespace AutoConverter.ViewModel
 
             string outFormat = "";
 
+            string inFormat = "";
+
             if (MkvOut)
             {
                 outExtension = ".mkv";
@@ -151,13 +166,28 @@ namespace AutoConverter.ViewModel
                 outFormat = Format.mp4;
             }
 
+            if (_filePathName.Contains("mkv"))
+            {
+                inFormat = Format.matroska;
+            }
+            else if (_filePathName.Contains("mp4"))
+            {
+                inFormat = Format.mp4;
+            }
+
             string outName = OutFileName + outExtension;
 
             //ConsoleAllocator.ShowConsoleWindow();
 
             //ProgressVisible = Visibility.Visible;
-
-            conv.ConvertMedia(_filePathName, Format.matroska, _filePathName.Remove(_filePathName.Length-FileName.Length) + outName, outFormat, convSet);
+            try
+            {
+                conv.ConvertMedia(_filePathName, inFormat, _filePathName.Remove(_filePathName.Length-FileName.Length) + outName, outFormat, convSet);
+            }
+            catch (FFMpegException e)
+            {
+                Debug.WriteLine(e.StackTrace);
+            }
 
             StartVisible = Visibility.Visible;
 
@@ -170,11 +200,24 @@ namespace AutoConverter.ViewModel
             {
                 ProgressVisible = Visibility.Visible;
             }
-            Console.Write("\rProcessed: " + e.Processed);
+
+
+
+            ProgressValue = (int)((e.Processed.TotalSeconds / e.TotalDuration.TotalSeconds) * 100);
+
+            //Debug.WriteLine("");
+            //Debug.WriteLine("\rProcessed: " + e.Processed.TotalSeconds);
+            //Debug.WriteLine("\rTotalDuration: " + e.TotalDuration.TotalSeconds);
+            //Debug.WriteLine("");
             //Console.Write("\rTotalDuration: " + e.TotalDuration);
         }
 
-        private void setInit()
+        private void UpdateBar(ConvertProgressEventArgs e)
+        {
+
+        }
+
+        private void SetInit()
         {
             FileName = "VÆLG FIL";
             FolderName = "VÆLG MAPPE";
@@ -184,8 +227,10 @@ namespace AutoConverter.ViewModel
             CopySub = true;
             Codecx264 = false;
             MkvOut = true;
-            StartVisible = Visibility.Visible;
+            StartVisible = Visibility.Hidden;
+            ProgressVisible = Visibility.Hidden;
             setEnabled();
+            //conv.ConvertProgress += UpdateProgress;
         }
 
         private void setEnabled()
